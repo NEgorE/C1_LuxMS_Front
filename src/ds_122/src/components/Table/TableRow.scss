@@ -1,0 +1,28 @@
+.TableRow {
+  padding: 0 20px;
+  font-weight: 700;
+  box-shadow: 0 3px 6px rgba(130, 136, 148, 0.16), 0 0 2px rgba(130, 136, 148, 0.08);
+  border-radius: 5px;
+  text-align: center;
+
+  & + & {
+    margin-top: 10px;
+  }
+
+  &__name {
+    padding: 15px 0 15px 30px;
+    text-align: left;
+  }
+
+  //&__vol {
+  //  text-align: end;
+  //  padding: 15px 0;
+  //}
+  //
+  //&__salary {
+  //  text-align: end;
+  //  padding: 15px 30px 15px 0;
+  //}
+
+}
+

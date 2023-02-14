@@ -1,0 +1,46 @@
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  color: #151515;
+  font-size: 15px;
+  padding: 25px 30px 0 30px;
+  font-family: 'PT Sans', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  //height: 100%;
+  overflow-y: scroll;
+  //max-width: 75%;
+  width: 100%;
+}
+
+.scroller {
+  &::-webkit-scrollbar:horizontal {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar:vertical {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(175, 197, 216, 0.3);
+    border-radius: 10px;
+    border: 0;
+    transition: all .2s ease-in-out;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    transition: all .2s ease-in-out;
+  }
+}

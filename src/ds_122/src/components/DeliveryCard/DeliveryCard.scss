@@ -1,0 +1,34 @@
+.ProfCard {
+  box-shadow: 0 3px 6px rgba(130, 136, 148, 0.25), 0 0 2px rgba(130, 136, 148, 0.12);
+  border-radius: 5px;
+  padding: 20px 15px 20px 20px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  max-width: 23.2%;
+  width: 100%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__name {
+    font-size: 15px;
+    word-break: break-word;
+  }
+
+  &__quantity {
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 3px;
+  }
+
+  &__changes {
+    font-size: 13px;
+  }
+}

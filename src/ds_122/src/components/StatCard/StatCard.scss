@@ -1,0 +1,24 @@
+.StatCard {
+  box-shadow: 0 3px 6px rgba(130, 136, 148, 0.25), 0 0 2px rgba(130, 136, 148, 0.12);
+  border-radius: 10px;
+  //max-width: 490px;
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+
+  &__title {
+    margin-bottom: 10px;
+    font-weight: 400;
+    display: block;
+  }
+
+  &__quantity {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 7px;
+  }
+
+  &__stats {
+    font-size: 13px;
+  }
+}
