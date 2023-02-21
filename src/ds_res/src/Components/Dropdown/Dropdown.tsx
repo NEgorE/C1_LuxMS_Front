@@ -37,6 +37,7 @@ export const Dropdown: FC<IProps> = (
   }
 
   const onSelectOption = (selectedObj: any) => {
+    console.log(selectedObj)
     onChange(selectedObj)
     setIsOptionsOpen(false)
   }
