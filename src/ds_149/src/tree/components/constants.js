@@ -8,6 +8,6 @@ export const TABS = [
   ]
 
 export const METRICS = [
-    { npp: 'metric1', title: 'MAU', value: 'mau'},
-    { npp: 'metric2', title: 'DAU', value: 'dau'},
+  {title: 'Объем продаж, руб', fact: 0, keyName: 'vol'},
+  {title: 'Объем продаж, кол-во', fact: 0, keyName: 'order_quantity'},
 ]

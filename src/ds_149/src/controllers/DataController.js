@@ -24,22 +24,30 @@ export const getCategoryFilterOptions = async () => {
 }
 
 export const getEmployeeTopMetricsData = async (
-  {
-    filter
-  }
-) => {
-  const data = await koobDataRequest3(
-    KOOB_ID,
-    ['categoryname'],
-    ['sum(vol)', 'sum(order_quantity)'],
     {
-      categoryname: ['=', filter]
-    },
-    {},
-    'getEmployeeTopMetricsData'
-  )
+        filter
+    }
+    ) => {
+    if (filter != 'Все категории') {
+        var dims = ['categoryname'];
+        var categoryFilter = { categoryname: ['=', filter] }
+    }
+    else {
+        var dims = [];
+        var categoryFilter = {};
+    }
+    console.log(`filter is ${categoryFilter}`)
+    console.log(categoryFilter)
+    const data = await koobDataRequest3(
+        KOOB_ID,
+        dims,
+        ['sum(vol)', 'sum(order_quantity)'],
+        categoryFilter,
+        {},
+        'getEmployeeTopMetricsData'
+    )
 
-  return prepareTopMetricsData(data[0])
+    return prepareTopMetricsData(data[0])
 }
 
 

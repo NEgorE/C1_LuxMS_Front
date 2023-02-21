@@ -6,6 +6,9 @@
     height: 45.3em;
     background-color: #f2f2f2;
 }
+.row-metric{
+    margin:0
+}
 
 .mh-10 {
     height: 10%;

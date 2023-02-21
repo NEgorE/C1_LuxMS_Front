@@ -1,4 +1,4 @@
-//import {METRICS} from "../Constants/CONSTANTS";
+import {METRICS} from "../tree/components/constants";
 
 export const prepareDataForDropdown = (arr) => {
   if (!Array.isArray(arr) || !arr) return []
@@ -14,14 +14,14 @@ export const prepareDataForDropdown = (arr) => {
 }
 
 
-//export const prepareTopMetricsData = (data) => {
-//  return METRICS.map((el) => {
-//    return {
-//      ...el,
-//      fact: data[el.keyName].toFixed(1)
-//    }
-//  })
-//}
+export const prepareTopMetricsData = (data) => {
+  return METRICS.map((el) => {
+    return {
+      ...el,
+      fact: data[el.keyName].toFixed(0)
+    }
+  })
+}
 
 
 export const prepareEmployeeBarsData = (data) => {

@@ -9,14 +9,13 @@ export const FilterLine = () => {
 
     const log_prefix = 'FILTER_LINE: ';
 
-    const [currCategoryName, setCurrCategoryName] = useState([])
+    const [currCategoryName, setCurrCategoryName] = useState(false)
 
     const [buttonClear, setButtonClear] = useState(0)
     const [buttonFilter1, setButtonFilter1] = useState(false)
 
     useEffect(() => {
         subscriberCategoryName1.subscribe((vl) => {
-            console.log(subscriberCategoryName1)
             const newFilterCount = subscriberCategoryName1._value.length; 
             setCurrCategoryName(vl)
             renderCrear(newFilterCount);
@@ -29,7 +28,8 @@ export const FilterLine = () => {
 
     function renderButtonFilter1(data) {
         const currFilterCount = data;
-        if ( currFilterCount ) {
+        console.log(`FILTERLINE ${currFilterCount}`)
+        if ( currFilterCount.length>0 ) {
             setButtonFilter1(
                 <li className="nav-item nav-item-filter">
                     <button className="nav-link nav-link-filter" onClick={clearFilter1} >Filter1: {currFilterCount} </button >

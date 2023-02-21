@@ -37,13 +37,12 @@ export const Dropdown: FC<IProps> = (
   }
 
   const onSelectOption = (selectedObj: any) => {
-    console.log(selectedObj)
     onChange(selectedObj)
     setIsOptionsOpen(false)
   }
 
   return (
-    <div className={`customSelect ${additionalClass}`} ref={ref}>
+    <div className={`customSelect ${additionalClass} row row-metric`} ref={ref}>
       <div className="customSelect__wrapper">
         <button className="customSelect__btn" type="button" onClick={toggleOptions}>
           <span className="customSelect__btn-title">{title}:</span>
