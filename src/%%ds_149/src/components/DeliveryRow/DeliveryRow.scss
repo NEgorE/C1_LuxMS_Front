@@ -1,0 +1,40 @@
+.DeliveryRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  box-shadow: 0 3px 6px rgba(130, 136, 148, 0.16), 0 0 2px rgba(130, 136, 148, 0.08);
+  border-radius: 5px;
+  padding: 20px 22px 20px 25px;
+  height: 60px;
+  width: 100%;
+  position: relative;
+
+  &__coloredLine {
+    border-radius: 5px 0 0 5px;
+    height: 100%;
+    width: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &+& {
+    margin-top: 10px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__quantity {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  &__changes {
+    font-size: 13px;
+  }
+
+}
