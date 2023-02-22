@@ -11,7 +11,7 @@ function App() {
     const [activeTabNum, setActiveTabNum] = useState(TABS.filter(item => item.type === 1).map(item => item.type)[0])
 
     return(
-        <div className="container-fluid text-center scroller">
+        <div className="container-fluid text-center">
             <Tabs changeTab={(tab) => setActiveTabNum(tab)}/>
             <FilterLine />
             <Report numTab = {activeTabNum}/>

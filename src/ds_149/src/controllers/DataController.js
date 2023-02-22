@@ -36,8 +36,6 @@ export const getEmployeeTopMetricsData = async (
         var dims = [];
         var categoryFilter = {};
     }
-    console.log(`filter is ${categoryFilter}`)
-    console.log(categoryFilter)
     const data = await koobDataRequest3(
         KOOB_ID,
         dims,
@@ -52,24 +50,28 @@ export const getEmployeeTopMetricsData = async (
 
 
 export const getEmployeeInfoBars = async (
-  {
-    filter
-  }
-) => {
-  const data = await koobDataRequest3(
-    KOOB_ID,
-    ['emp_last_name', 'empid'],
-    ['sum(vol)'],
     {
-      categoryname: ['=', filter]
-    },
-    {
-      sort: ['-vol']
-    },
-    'getEmployeeInfoBars'
-  )
-
-  return prepareEmployeeBarsData(data)
+        filter
+    }
+    ) => {
+    if (filter != 'Все категории') {
+        var categoryFilter = { categoryname: ['=', filter] }
+    }
+    else {
+        var categoryFilter = {};
+    }
+    const data = await koobDataRequest3(
+        KOOB_ID,
+        ['emp_last_name', 'empid'],
+        ['sum(vol)'],
+        categoryFilter,
+        {
+          sort: ['-vol']
+        },
+        'getEmployeeInfoBars'
+    )
+    const returndata = prepareEmployeeBarsData(data)
+    return returndata
 }
 
 

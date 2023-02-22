@@ -25,16 +25,15 @@ export const prepareTopMetricsData = (data) => {
 
 
 export const prepareEmployeeBarsData = (data) => {
-  return data.map(el => {
-    const {empid, vol, emp_last_name} = el
-
-    return {
-      empId: empid,
-      empName: emp_last_name,
-      vol: +vol.toFixed(1),
-      isDeclined: vol < 5000
-    }
-  })
+    return data.map(el => {
+        const {empid, vol, emp_last_name} = el
+        return {
+            empId: empid,
+            empName: emp_last_name,
+            vol: +vol.toFixed(1),
+            isDeclined: vol < 5000 ? '#EF6B6B' : '#7CB1FF'
+        }
+    })
 }
 
 export const prepareEmployeeInfoTableData = (data) => {
