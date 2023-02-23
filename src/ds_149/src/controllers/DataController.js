@@ -4,7 +4,9 @@ import {
   prepareDataForDropdown,
   prepareEmployeeBarsData,
   prepareEmployeeInfoTableData,
-  prepareTopMetricsData
+  prepareTopMetricsData,
+  prepareDeliveryCardsData, 
+  prepareDeliveryFreightData
 } from "./DataTransformation";
 
 const {koobDataRequest3} = KoobDataService;
@@ -36,8 +38,6 @@ export const getEmployeeTopMetricsData = async (
         var dims = [];
         var categoryFilter = {};
     }
-    console.log(`filter is ${categoryFilter}`)
-    console.log(categoryFilter)
     const data = await koobDataRequest3(
         KOOB_ID,
         dims,
@@ -52,24 +52,28 @@ export const getEmployeeTopMetricsData = async (
 
 
 export const getEmployeeInfoBars = async (
-  {
-    filter
-  }
-) => {
-  const data = await koobDataRequest3(
-    KOOB_ID,
-    ['emp_last_name', 'empid'],
-    ['sum(vol)'],
     {
-      categoryname: ['=', filter]
-    },
-    {
-      sort: ['-vol']
-    },
-    'getEmployeeInfoBars'
-  )
-
-  return prepareEmployeeBarsData(data)
+        filter
+    }
+    ) => {
+    if (filter != 'Все категории') {
+        var categoryFilter = { categoryname: ['=', filter] }
+    }
+    else {
+        var categoryFilter = {};
+    }
+    const data = await koobDataRequest3(
+        KOOB_ID,
+        ['emp_last_name', 'empid'],
+        ['sum(vol)'],
+        categoryFilter,
+        {
+          sort: ['-vol']
+        },
+        'getEmployeeInfoBars'
+    )
+    const returndata = prepareEmployeeBarsData(data)
+    return returndata
 }
 
 
@@ -85,4 +89,50 @@ export const getEmployeeTableData = async () => {
   )
 
   return prepareEmployeeInfoTableData(data)
+}
+//CUSTOMERS INFO
+
+// Получение фильтра
+export const getCountriesFilterOptions = async () => {
+  const data = await koobDataRequest3(
+    KOOB_ID,
+    ['customer_country'],
+    [],
+    {},
+    {},
+    'getCountriesFilterOptions')
+  const data2 = prepareDataForDropdown(data)
+  return data2
+}
+
+// Получение данных для категорий и бублика
+export const getDeliveryFreightData = async (
+  {
+    filter
+  }
+  ) => {
+    const data= await koobDataRequest3(
+    KOOB_ID,
+    ['customer_companyname'],
+    ['sum(order_unitprice)'],
+    {customer_country: ['=', filter]},
+    {},
+    'getDeliveryFreightData')
+  return prepareDeliveryFreightData(data)
+}
+
+export const getDeliveryCardsData = async (
+  {
+    filter
+  }
+) => {
+  const data = await koobDataRequest3(
+    KOOB_ID,
+    ['productname'],
+    ['sum(order_unitprice)'],
+    {customer_country: ['=', filter]},
+    {},
+    'getDeliveryCardsData'
+  )
+  return prepareDeliveryCardsData(data)
 }

@@ -1,4 +1,4 @@
-import {METRICS} from "../tree/components/constants";
+import {METRICS, COLORS} from "../tree/components/constants";
 
 export const prepareDataForDropdown = (arr) => {
   if (!Array.isArray(arr) || !arr) return []
@@ -25,16 +25,16 @@ export const prepareTopMetricsData = (data) => {
 
 
 export const prepareEmployeeBarsData = (data) => {
-  return data.map(el => {
-    const {empid, vol, emp_last_name} = el
-
-    return {
-      empId: empid,
-      empName: emp_last_name,
-      vol: +vol.toFixed(1),
-      isDeclined: vol < 5000
-    }
-  })
+    return data.map(el => {
+        const {empid, vol, emp_last_name} = el
+        return {
+            empId: empid,
+            empName: emp_last_name,
+            vol: +vol.toFixed(1),
+            voltitle: String(+vol.toFixed(0)).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 '),
+            isDeclined: vol < 5000 ? '#EF6B6B' : '#7CB1FF'
+        }
+    })
 }
 
 export const prepareEmployeeInfoTableData = (data) => {
@@ -51,4 +51,31 @@ export const prepareEmployeeInfoTableData = (data) => {
     }
   })
 }
+
+export const prepareDeliveryCardsData = (data) => {
+  return data.map(({order_unitprice, productname}) => {
+    return {
+      productsInStock: +order_unitprice.toFixed(1),
+      supplierCompanyName: productname
+    }
+  })
+}
+
+export const prepareDeliveryFreightData = (data) => {
+  let total = 0
+  const categories = data.map(({customer_companyname, order_unitprice}, index) => {
+    total += order_unitprice
+    return {
+      factValue: +order_unitprice.toFixed(1),
+      categoryName: customer_companyname,
+      color: COLORS[index]
+    }
+  })
+
+  return {
+    total: +total.toFixed(1),
+    categories,
+  }
+}
+
   
