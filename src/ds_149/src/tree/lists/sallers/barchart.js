@@ -21,20 +21,16 @@ export const Barchart = (props) => {
     }, [])
 
     useEffect(() => {
-        console.log('Bar data')
-        console.log(chart3data)
         if(chart3data){
             generateChart3(chart3data);
         }
     }, [chart3data])
 
-    useEffect(() => {
-        
+    useEffect(() => { 
         getChart3Data();
     }, [currFilter1])
 
     function getChart3Data() {
-        let result = false;
         var filter1 = false;
 
         if (currFilter1 === '' || !currFilter1) {
@@ -43,7 +39,6 @@ export const Barchart = (props) => {
         else {
             filter1 = currFilter1
         }
-        console.log(`filter for req for bars : ${filter1}`)
 
         getEmployeeInfoBars({
             filter: filter1
@@ -51,6 +46,18 @@ export const Barchart = (props) => {
             setchart3data(res)
         })
     };
+
+    const CustomizedAxisTick = (props) => {
+        const { x, y, stroke, payload } = props;
+        const colorx = parseInt(payload.value.replace(' ',''),10) < 5000 ? '#EF6B6B' : '#7CB1FF'
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text x={0} y={0} dy={8} textAnchor="middle" fill={colorx} >
+                    {payload.value}
+                </text>
+            </g>
+        );
+    }
 
     function generateChart3(data) {
         const dMin = 0;
@@ -63,17 +70,16 @@ export const Barchart = (props) => {
                     <BarChart
                         data={data}
                         margin={{
-                        top: 20,
+                        top: 0,
                         right: 30,
                         left: 0,
                         bottom: 5,
                         }}
                     >
-                        <XAxis dataKey="empName" interval={0} tickSize={11} height={40} type="category" tickLine={false} axisLine={false}/>
+                        <XAxis dataKey="voltitle" tick={<CustomizedAxisTick />} interval={0} tickSize={11} height={20} type="category" tickLine={false} axisLine={false} />
+                        <XAxis dataKey="empName" interval={0} tickSize={11} height={40} type="category" tickLine={false} axisLine={false} xAxisId='zlol'/>
                         <Bar dataKey="vol" radius={7} isAnimationActive={false}> 
-                            <LabelList dataKey="vol" position="top" fill="#000" />
                             {data.map((entry, index) => (
-                                console.log(entry.isDeclined),
                                 <Cell cursor="pointer" fill={entry.isDeclined} key={`cell-${index}`} />
                             ))}
                         </Bar>

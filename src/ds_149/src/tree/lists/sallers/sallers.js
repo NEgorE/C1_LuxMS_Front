@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from '../../../../../ds_res/src/Components/Dropdown';
 import { StatCard } from "../../../../../%%ds_149/src/components/StatCard";
-import { subscriberCategoryName1 } from '../../../../CrossFilter';
+import { 
+    subscriberCategoryName1,
+    subscriberCountryName1,
+    subscriberEmpName1 
+} from '../../../../CrossFilter';
 import { Barchart } from "./barchart";
 
 import {
@@ -13,18 +17,14 @@ import {
 
 export const Sallers = (props) => {
 
+    const currCategoryName1 = subscriberCategoryName1._value;
+
     const [container, setContainer] = useState(false)
     const [selectData, setSelectData] = useState([])
-    const [selectedFilter, setSelectedFilter] = useState({})
+    const [selectedFilter, setSelectedFilter] = useState({name: currCategoryName1})
     const [metrics, setMetrics] = useState([])
 
     useEffect(() => {
-        if (subscriberCategoryName1._value.length <= 0) {
-            setSelectedFilter({name: 'Все категории'})
-        }
-        else {
-            setSelectedFilter({name: subscriberCategoryName1._value})
-        }
         getCategoryFilterOptions().then(res => {
             setSelectData(res)
         })
@@ -45,7 +45,7 @@ export const Sallers = (props) => {
             setMetrics(res)
         })
         renderCharts();
-    }, [selectData, selectedFilter])
+    }, [selectedFilter])
 
     useEffect(() => {
         renderCharts();
@@ -56,12 +56,17 @@ export const Sallers = (props) => {
     }
 
     function renderCharts() {
+        console.log('data')
+        console.log(selectData)
+        console.log('selectedFilter')
+        console.log(selectedFilter)
         const element = (
             <div className="container-fluid h-100">
                 <Dropdown
                     data={selectData}
                     onChange={onSelectFilter}
                     selectedOption={selectedFilter}
+                    title='Категория'
                 />
                 <section className="statsInfo row row-metric">
                     {metrics.map((el) => {
