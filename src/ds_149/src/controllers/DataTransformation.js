@@ -1,5 +1,7 @@
 import {METRICS, COLORS} from "../tree/components/constants";
 
+import { schemeAccent } from 'd3-scale-chromatic';
+
 export const prepareDataForDropdown = (arr) => {
   if (!Array.isArray(arr) || !arr) return []
 
@@ -63,18 +65,18 @@ export const prepareDeliveryCardsData = (data) => {
 
 export const prepareDeliveryFreightData = (data) => {
   let total = 0
-  const categories = data.map(({customer_companyname, order_unitprice}, index) => {
+  const customers = data.map(({customer_companyname, order_unitprice}, index) => {
     total += order_unitprice
     return {
       factValue: +order_unitprice.toFixed(1),
       categoryName: customer_companyname,
-      color: COLORS[index]
+      color: schemeAccent[index % 8]
     }
   })
 
   return {
     total: +total.toFixed(1),
-    categories,
+    customers,
   }
 }
 

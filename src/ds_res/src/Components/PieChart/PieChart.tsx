@@ -1,7 +1,6 @@
 import React from 'react'
-import './PieChart.scss'
 
-import {Cell, Pie, ResponsiveContainer, Legend, PieChart} from 'recharts'
+import {Cell, Pie, ResponsiveContainer, Legend, PieChart, Tooltip} from 'recharts'
 
 
 export const PieCircle = (
@@ -13,18 +12,24 @@ export const PieCircle = (
     renderCustomLegend
   }
 ) => {
-  return (
+
+
+
+  console.log('Pie data')
+  console.log(data)
+  return [
     <div className='PieChart'>
-      <ResponsiveContainer>
+      <ResponsiveContainer width={515} height={485}>
         <PieChart>
-          <Pie data={data} dataKey={dataKey} innerRadius={innerRadius} outerRadius={outerRadius}>
+          <Pie data={data} dataKey={dataKey} innerRadius={innerRadius} outerRadius={outerRadius} isAnimationActive={false} nameKey="categoryName">
             {data.map((cell, index) => (
-              <Cell stroke='transparent' key={`cell-${index}`} fill={cell.color}/>
+                <Cell stroke='transparent' key={`cell-${index}`} fill={cell.color}/>
             ))}
           </Pie>
+          <Tooltip />
           {renderCustomLegend && <Legend align="center" verticalAlign="middle" content={renderCustomLegend}/>}
         </PieChart>
       </ResponsiveContainer>
     </div>
-  )
+  ]
 }

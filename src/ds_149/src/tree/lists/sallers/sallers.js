@@ -49,7 +49,7 @@ export const Sallers = (props) => {
 
     useEffect(() => {
         renderCharts();
-    }, [metrics])
+    }, [metrics, selectData])
 
     const onSelectFilter = (option) => {
         setSelectedFilter(option)
