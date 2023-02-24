@@ -1,76 +1,99 @@
 import React, { useEffect, useState } from "react";
-import { subscriberCategoryName1 } from '../../../../CrossFilter';
-
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell} from 'recharts';
+import { 
+    subscriberCountryName1,
+    subscriberCategoryName1
+} from '../../../../CrossFilter';
+import { PieCircle } from "../../../../../ds_res/src/Components/PieChart";
+import { DeliveryRow } from '../../../../../%%ds_149/src/components/DeliveryRow';
+import { CustomLegend } from "../../../../../ds_res/src/Components/CustomLegend/CustomLegend";
 
 import {
-    getEmployeeInfoBars
+    getDeliveryFreightData
   } from '../../../controllers/DataController';
 
 export const ListChart = (props) => {
 
-    const log_prefix = 'Barchart: '
+    const log_prefix = 'ListChart: '
 
-    const currFilter1 = subscriberCategoryName1._value
+    const currFilter1 = subscriberCountryName1._value
+    const currFilter0 = subscriberCategoryName1._value
 
     const [listChart, setListChart] = useState(false)
-    const [chart3data, setchart3data] = useState(false)
+    const [listChartData, setListChartData] = useState(false)
 
+    useEffect(() => {
+        getlistChartData();
+    }, [])
 
-    //useEffect(() => {
-    //    getChart3Data();
-    //}, [])
-//
-    //useEffect(() => {
-    //    if(chart3data){
-    //        generateChart3(chart3data);
-    //    }
-    //}, [chart3data])
-//
-    //useEffect(() => { 
-    //    getChart3Data();
-    //}, [currFilter1])
+    useEffect(() => {
+        getlistChartData();
+    }, [currFilter1, currFilter0])
 
-    //function getChart3Data() {
-        //var filter1 = false;
-//
-        //if (currFilter1 === '' || !currFilter1) {
-        //    filter1 = 'Все категории'
-        //}
-        //else {
-        //    filter1 = currFilter1
-        //}
-//
-        //getEmployeeInfoBars({
-        //    filter: filter1
-        //}).then(res => {
-        //    setchart3data(res)
-        //})
-    //};
+    useEffect(() => { 
+        if(listChartData){
+            generateChart3(listChartData);
+        }
+    }, [listChartData])
 
-    function generateChart3() {
-        const dMin = 0;
+    function getlistChartData() {
+        var filter1 = false;
+        var filter0 = false;
+        
+        if (currFilter1 === '' || !currFilter1) {
+            filter1 = 'Все страны'
+        }
+        else {
+            filter1 = currFilter1
+        }
+        if (currFilter0 === '' || !currFilter0) {
+            filter0 = 'Все категории'
+        }
+        else {
+            filter0 = currFilter0
+        }
+
+        getDeliveryFreightData(
+        {
+            filter: filter1,
+            filter0: filter0
+        }
+        ).then(res => {
+            setListChartData(res)
+        })
+    };
+
+    function generateChart3(data) {
+        const data_list =  [ ...new Set(data.customers)]
+        const data_total = data.total
         const element = [
-            <div class='row mh-10'>
-                <p class='chart-title '>Sum VOL by Chops</p>
-            </div>, 
-            <div class='row mh-90'>
-                <div class='col col-8 h-100 cobj' >
-                    <div class='col obj h-100'>
-                        List
+            <div class='row h-100'>
+                <div class='col col-7 h-100 cobj' >
+                    <div class='col obj h-100 container'>
+                        {data_list.map(item =>
+                            (
+                                <DeliveryRow
+                                    key={item.categoryName}
+                                    name={item.categoryName}
+                                    fact={item.factValue}
+                                    color={item.color}
+                                />
+                            )
+                        )}
                     </div>
                 </div>
-                <div class='col col-4 h-100 cobj' >
+                <div class='col col-5 h-100 cobj' >
                     <div class='col obj h-100'>
-                        Pie
+                        <div className="delivery__circle">
+                            <PieCircle data={data_list} renderCustomLegend={() => <CustomLegend total={data_total}/>}/>
+                        </div>
                     </div>
                 </div>
             </div> 
         ];
-        setChart3(element);
+        setListChart(element);
     }
 
     return (
-        chart3 ? chart3 : 'Smth wrong'
+        listChart ? listChart : 'Smth wrong'
     )
 }

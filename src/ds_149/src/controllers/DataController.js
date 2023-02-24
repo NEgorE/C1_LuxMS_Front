@@ -97,9 +97,11 @@ export const getCountriesFilterOptions = async () => {
   const data = await koobDataRequest3(
     KOOB_ID,
     ['customer_country'],
-    [],
+    ['sum(order_unitprice)'],
     {},
-    {},
+    {
+      sort: ['-order_unitprice']
+    },
     'getCountriesFilterOptions')
   const data2 = prepareDataForDropdown(data)
   return data2
@@ -108,17 +110,34 @@ export const getCountriesFilterOptions = async () => {
 // Получение данных для категорий и бублика
 export const getDeliveryFreightData = async (
   {
-    filter
+    filter, filter0
   }
-  ) => {
-    const data= await koobDataRequest3(
+) => {
+  if (filter != 'Все страны') {
+      var customer_countryX = { customer_country: ['=', filter] }
+  }
+  else {
+      var customer_countryX = {};
+  }
+  if (filter0 != 'Все категории') {
+    customer_countryX.categoryname =['=', filter0]
+  }
+  console.log("0000000000000000000000000getDeliveryFreightData")
+  console.log(customer_countryX)
+  const data= await koobDataRequest3(
     KOOB_ID,
     ['customer_companyname'],
     ['sum(order_unitprice)'],
-    {customer_country: ['=', filter]},
-    {},
-    'getDeliveryFreightData')
-  return prepareDeliveryFreightData(data)
+    //{customer_country: ['=', filter]},
+    customer_countryX,
+    {
+      sort: ['-order_unitprice']
+    },
+    'getDeliveryFreightData'
+  )
+  console.log(data)
+  const data2 = prepareDeliveryFreightData(data)
+  return data2
 }
 
 export const getDeliveryCardsData = async (

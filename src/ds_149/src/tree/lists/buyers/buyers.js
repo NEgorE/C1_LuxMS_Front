@@ -15,10 +15,12 @@ export const Buyers = (props) => {
     const log_prefix = 'BUYERS: ';
 
     const currCountryName1 = subscriberCountryName1._value;
+    const currCategoryName1 = subscriberCategoryName1._value;
 
     const [container, setContainer] = useState(false)
     const [dataCountry, setDataCountry] = useState([])
     const [selectedCountry, setSelectedCountry] = useState({name: currCountryName1})
+    const [selectedCategory, setSelectedCategory] = useState({name: currCategoryName1})
 
     useEffect(() => {
         getCountriesFilterOptions().then(res => {
@@ -29,14 +31,22 @@ export const Buyers = (props) => {
                 setSelectedCountry({name: 'Все страны'})
             }
         })
+        subscriberCategoryName1.subscribe((vx) => {
+            if ( vx.length <=0 ) {
+                setSelectedCategory({name: 'Все категории'})
+            }
+        })
     }, [])
 
     useEffect(() => {
         if (selectedCountry.name != 'Все страны'){
             subscriberCountryName1.next(selectedCountry.name)
         }
+        if (selectedCategory.name != 'Все категории'){
+            subscriberCategoryName1.next(selectedCategory.name)
+        }
         renderCharts();
-    }, [selectedCountry, dataCountry])
+    }, [selectedCountry, dataCountry, selectedCategory])
 
 
 
@@ -46,14 +56,14 @@ export const Buyers = (props) => {
 
     function renderCharts() {
         const element = (
-            <div className="container-fluid h-100">
-                <Dropdown
+            <div className="container-fluid buyers_h">
+                <Dropdown className="mh-90"
                     data={dataCountry}
                     onChange={onSelectFilter}
                     selectedOption={selectedCountry}
                     title="Страна"
                 />
-                <div className="row row-metric">
+                <div className="row row-metric mh-90">
                     <ListChart />
                 </div>
             </div>    
