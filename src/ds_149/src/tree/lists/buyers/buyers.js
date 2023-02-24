@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from '../../../../../ds_res/src/Components/Dropdown';
+import { ListChart } from "./listchart";
 import { 
     subscriberCategoryName1,
     subscriberCountryName1,
@@ -10,6 +11,8 @@ import {
   } from '../../../controllers/DataController';
 
 export const Buyers = (props) => {
+
+    const log_prefix = 'BUYERS: ';
 
     const currCountryName1 = subscriberCountryName1._value;
 
@@ -33,17 +36,15 @@ export const Buyers = (props) => {
             subscriberCountryName1.next(selectedCountry.name)
         }
         renderCharts();
-    }, [selectedCountry])
+    }, [selectedCountry, dataCountry])
+
+
 
     const onSelectFilter = (option) => {
         setSelectedCountry(option)
     }
 
     function renderCharts() {
-        console.log('data')
-        console.log(dataCountry)
-        console.log('selectedFilter')
-        console.log(selectedCountry)
         const element = (
             <div className="container-fluid h-100">
                 <Dropdown
@@ -52,9 +53,9 @@ export const Buyers = (props) => {
                     selectedOption={selectedCountry}
                     title="Страна"
                 />
-                <div>
-                    lol
-                </div> 
+                <div className="row row-metric">
+                    <ListChart />
+                </div>
             </div>    
         )
         setContainer(element)
